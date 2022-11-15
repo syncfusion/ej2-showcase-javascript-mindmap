@@ -1,0 +1,234 @@
+<html>
+
+<head>
+    <script src="https://cdn.syncfusion.com/ej2/20.3.47/dist/ej2.min.js" type="text/javascript"></script>
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/fluent.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-base/styles/fluent.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-buttons/styles/fluent.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-popups/styles/fluent.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-splitbuttons/styles/fluent.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-diagrams/styles/fluent.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-navigations/styles/fluent.css" rel="stylesheet">
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/ej2-inputs/styles/fluent.css" rel="stylesheet" />
+    <link href="./assets/index.css" rel="stylesheet" />
+    <link href="./assets/db-icons1/style.css" rel="stylesheet" />
+    <link href="./assets/dbstyle/diagrambuilder.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <style>
+        .e-toolbar .e-toolbar-items .e-toolbar-item button.e-btn .e-icons.e-btn-icon.sssk {
+            background-image: url('1.svg');
+            background-repeat: no-repeat;
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
+            min-height: 14px;
+            line-height: 14px;
+        }
+    </style>
+
+    <div class='diagrambuilder-container' style="display: block;">
+        <div class='header navbar'>
+            <div class="db-header-container">
+                <div class="db-diagram-name-container">
+                    <span id='diagramName'
+                        style="width:250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                        class="db-diagram-name" onclick="renameDiagram(event)">Untitled Diagram</span>
+                    <input id='diagramEditable' type="text" class="db-diagram-name"
+                        onkeydown="diagramNameKeyDown(event)" onfocusout="diagramNameChange(event)" />
+                    <span id='diagramreport' class="db-diagram-name db-save-text"></span>
+                </div>
+                <div class='db-menu-container'>
+                    <div class="db-menu-style">
+                        <button id="btnFileMenu"></button>
+                    </div>
+                    <div class="db-menu-style">
+                        <button id="btnEditMenu"></button>
+                    </div>
+                    <div class="db-menu-style">
+                        <button id="btnViewMenu"></button>
+                    </div>
+
+                    <div class="db-menu-style">
+                        <button id="btnWindowMenu"></button>
+                    </div>
+                </div>
+            </div>
+            <div class='db-toolbar-editor'>
+                <div class='db-toolbar-container'>
+                    <div id="toolbarEditor"></div>
+                </div>
+                <div class="db-toolbar-hide-btn">
+                    <button id="btnHideToolbar" class="e-control e-btn e-lib e-icon-btn"></button>
+                </div>
+            </div>
+        </div>
+        <div class='row content'>
+
+            <div class='main-content' role='main'>
+                <div class="db-diagram-container">
+                    <div id="diagramContainerDiv">
+                        <div id="diagram"></div>
+                    </div>
+                    <input type="file" id="fileupload" name="UploadFiles">
+                </div>
+                <div class='db-property-editor-container' style="overflow:auto;">
+
+                    <div id='mindMapContainer' class="db-mindmap-prop-container">
+                        <div class="row db-prop-header-text">
+                            MindMap Pattern
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-6 org-pattern-parent">
+                                <div onclick="mindmapPatternChange(event)"
+                                    class="mindmap-pattern-style mindmap-pattern1"></div>
+                            </div>
+                            <div class="col-xs-6 org-pattern-parent">
+                                <div onclick="mindmapPatternChange(event)"
+                                    class="mindmap-pattern-style mindmap-pattern2"></div>
+                            </div>
+                        </div>
+                        <div class="row db-prop-row" style="margin-top:5px">
+                            <div class="col-xs-6 org-pattern-parent">
+                                <div onclick="mindmapPatternChange(event)"
+                                    class="mindmap-pattern-style mindmap-pattern3"></div>
+                            </div>
+                            <div class="col-xs-6 org-pattern-parent">
+                                <div onclick="mindmapPatternChange(event)"
+                                    class="mindmap-pattern-style mindmap-pattern4"></div>
+                            </div>
+                        </div>
+                        <div class="db-prop-separator">
+                        </div>
+                        <div class="row db-prop-header-text">
+                            MindMap Levels Styles
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-6 db-col-left">
+                                <input type="text" id='mindMapLevels' />
+                            </div>
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-6 db-col-left">
+                                <div class="db-color-container">
+                                    <div class="db-color-input">
+                                        <input id="mindmapFill" type="color">
+                                    </div>
+                                    <div class="db-color-btn">
+                                        <button id="mindmapFillIconBtn"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-4 db-col-left">
+                                <div class="db-color-container">
+                                    <div class="db-color-input">
+                                        <input id="mindmapStroke" type="color">
+                                    </div>
+                                    <div class="db-color-btn">
+                                        <button id="mindmapStrokeIconBtn"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 db-col-center">
+                                <input type="text" id='strokeStyle' />
+                            </div>
+                            <div class="col-xs-4 db-col-right">
+                                <input id="mindmapStrokeWidth" type="text" />
+                            </div>
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
+                                <span class="db-prop-text-style">Opacity</span>
+                            </div>
+                            <div class="col-xs-8 db-col-left" style="padding-right:10px">
+                                <div id='mindmapOpacitySlider'></div>
+                            </div>
+                            <div class="col-xs-2 db-col-right">
+                                <input type="text" readOnly="true" id="mindmapOpacityText" class="db-readonly-input"
+                                    value="100%" />
+                            </div>
+                        </div>
+                        <p></p>
+                        <div class="row db-prop-header-text">
+                            Connector Type
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-4 db-col-left">
+                                <input id="radio1" type="radio">
+                            </div>
+                            <div class="col-xs-4 db-col-right">
+                                <input id="radio2" type="radio">
+                            </div>
+                        </div>
+                        <div style="margin-top:10px;margin-bottom: 15px"></div>
+                        <div class="row db-prop-header-text">
+                            Text Style
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-8 db-col-left">
+                                <input type="text" id='mindmapFontFamilyList' />
+                            </div>
+                            <div class="col-xs-4 db-col-right">
+                                <input id="mindmapFontSize" type="text" />
+                            </div>
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-8 db-col-left">
+                                <div id="mindmapTextStyleToolbar"></div>
+                            </div>
+                            <div class="col-xs-4 db-col-right" id="textColorDiv">
+                                <div class="db-color-container">
+                                    <div class="db-color-input">
+                                        <input id="mindmapTextColor" type="color">
+                                    </div>
+                                    <div class="db-color-btn">
+                                        <button id="textColorIconBtn"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-2 db-col-right db-prop-text-style" style="padding-top: 6px">
+                                <span class="db-prop-text-style">Opacity</span>
+                            </div>
+                            <div class="col-xs-8 db-col-left" style="padding-right:10px">
+                                <div id='mindmapTextOpacitySlider'></div>
+                            </div>
+                            <div class="col-xs-2 db-col-right">
+                                <input type="text" id="textOpacityText" class="db-readonly-input" readOnly="true"
+                                    value="100%" />
+                            </div>
+                        </div>
+                        <div class="row db-prop-row">
+                            <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 10px">
+                                <span class="db-prop-text-style db-spacing-text">Horizontal Spacing</span>
+                            </div>
+                            <div class="col-xs-4 db-col-left" style="padding-top: 10px">
+                                <input id="horizontalSpacingBtn" type="text" />
+                            </div>
+                            <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 6px">
+                                <span class="db-prop-text-style db-spacing-text">Vertical Spacing</span>
+                            </div>
+                            <div class="col-xs-4 db-col-left">
+                                <input id="verticalSpacingBtn" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="index.js" type="text/javascript"></script>
+
+
+</body>
+
+</html>
