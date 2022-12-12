@@ -10,6 +10,8 @@
         <link href="https://cdn.syncfusion.com/ej2/20.3.56/ej2-inputs/styles/fluent.css" rel="stylesheet"
         type="text/css" />
     <link href="https://cdn.syncfusion.com/ej2/20.3.56/ej2-dropdowns/styles/fluent.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/20.3.56/ej2-navigations/styles/fluent.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/20.3.56/ej2-splitbuttons/styles/fluent.css" rel="stylesheet" type="text/css" />
     <link href="./assets/index.css" rel="stylesheet" />
     <link href="./assets/dbstyle/diagrambuilder.css" rel="stylesheet" />
     <link href="./assets/Diagram_Builder_Icon/style.css" rel="stylesheet" />
@@ -27,6 +29,10 @@
             min-height: 14px;
             line-height: 14px;
         }
+        #js-licensing {
+            display: none;
+        }
+        
     </style>
 
     <div class='diagrambuilder-container' style="display: block;">
@@ -68,7 +74,7 @@
         <div class='row content'>
 
             <div class='main-content' role='main'>
-                <div id="treeview" class="db-diagram-container" style="overflow:auto;">
+                <div id="treeview" class="db-diagram-container" style="overflow:auto;display: none;">
                     <div class="control_wrapper">
                         <!-- Initialize TreeView -->
                         <div id="tree"></div>
@@ -226,7 +232,7 @@
                         <div class="db-prop-separator">
                         </div>
                         <div class="row db-prop-row">
-                            <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 10px">
+                            <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 14px">
                                 <span class="db-prop-text-style db-spacing-text">Horizontal Spacing</span>
                             </div>
                             <div class="col-xs-4 db-col-left" style="padding-top: 10px">
@@ -234,10 +240,10 @@
                                     <input id="horizontalSpacingBtn" type="text" />
                                 </div>
                             </div>
-                            <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 6px">
+                            <div class="col-xs-8 db-col-right db-prop-text-style" style="padding-top: 14px">
                                 <span class="db-prop-text-style db-spacing-text">Vertical Spacing</span>
                             </div>
-                            <div class="col-xs-4 db-col-left">
+                            <div class="col-xs-4 db-col-left" style="padding-top: 10px;">
                                 <div class="db-text-input">
                                     <input id="verticalSpacingBtn" type="text" />
                                 </div>

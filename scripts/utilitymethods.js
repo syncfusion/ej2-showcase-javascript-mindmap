@@ -36,8 +36,26 @@ var UtilityMethods = (function () {
                 addMultipleChild();
                 break;
         }
-        diagram.dataBind();
+        if (item === 'Undo' || item === 'Redo' || item === 'Select Tool' || item === 'Pan Tool' || item === 'Add Child' || item === 'Add Sibling' || item === 'Add Multiple Child') {
+            if (args.item.cssClass.indexOf('tb-item-selected') === -1) {
+                this.removeSelectedToolbarItem();
+                args.item.cssClass += ' tb-item-selected';
+            }
+            diagram.dataBind();
+        }
     };
+
+    UtilityMethods.prototype.removeSelectedToolbarItem = function () {
+        var toolbarEditor = document.getElementById('toolbarEditor').ej2_instances[0];;
+        for (var i = 0; i < toolbarEditor.items.length; i++) {
+            var item = toolbarEditor.items[i];
+            if (item.cssClass.indexOf('tb-item-selected') !== -1) {
+                item.cssClass = item.cssClass.replace(' tb-item-selected', '');
+            }
+        }
+        toolbarEditor.dataBind();
+    }
+
     UtilityMethods.prototype.menuClick = function (args) {
         var buttonElement = document.getElementsByClassName('e-btn-hover')[0];
         if (buttonElement) {
@@ -325,7 +343,7 @@ var UtilityMethods = (function () {
                     return true;
                 }
             }
-            if (itemText === 'Themes' || itemText === 'Paste' || itemText === 'Show Rulers') {
+            if (itemText === 'Themes' || itemText === 'Show Rulers') {
                 return true;
             }
             if (itemText === 'Show Shortcuts') {

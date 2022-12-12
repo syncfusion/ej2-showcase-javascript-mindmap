@@ -741,6 +741,7 @@ input, button, select, textarea {
     line-height: 28px;
     font-size: 12px;
     text-indent: 3px;
+    margin: 8px;
 }
 
 #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-drawtools-dropdown-btn .e-dropdown-btn {
@@ -936,7 +937,7 @@ input, button, select, textarea {
 
 .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn,
 .e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected {
-    background: #7d7d7d;
+    background: #0078D4;
 }
 
 .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn .e-icons.e-btn-icon,
@@ -985,39 +986,9 @@ input, button, select, textarea {
     color: #757575;
 }
 
-/* Toolbar Enable - End */
-
-/* Toolbar Hover */
-
-/* .db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover,
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn:hover,
-.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover {
-    background: #EEEEEE;
+.e-checkbox-wrapper .e-frame + .e-label, .e-css.e-checkbox-wrapper .e-frame + .e-label {
+    font-size: 12px;
 }
-
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover span,
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn:hover span,
-.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn:hover span {
-    color: #757575;
-}
-
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover,
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected:hover,
-.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover {
-    background: #7d7d7d;
-}
-
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover span,
-.db-toolbar-container #toolbarEditor .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected:hover span,
-.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn:hover span {
-    color: #ffffff;
-}
-
-.db-property-editor-container .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn span:hover {
-    color: #ffffff;
-} */
-
-/* Toolbar Customization - End */
 
 /* Dialog Content - Customization - Start */
 
@@ -2418,66 +2389,3 @@ input.e-input::selection,
     color: #515151;
     font-size: 12px;
 }
-.e-splitter
-        .e-split-bar.e-split-bar-horizontal
-        .e-navigate-arrow.e-arrow-left,
-      .e-splitter
-        .e-split-bar.e-split-bar-horizontal
-        .e-navigate-arrow.e-arrow-right {
-        background-color: #fff;
-        border-color: #276ef2;
-        border-width: 1px;
-        opacity: 0.9;
-      }
-
-      .e-splitter
-        .e-split-bar.e-split-bar-horizontal
-        .e-navigate-arrow.e-arrow-left::before {
-        background-color: #276ef2;
-        opacity: 1;
-        transform: rotate(40deg);
-      }
-
-      .e-splitter
-        .e-split-bar.e-split-bar-horizontal
-        .e-navigate-arrow.e-arrow-left::after {
-        background-color: #276ef2;
-        opacity: 1;
-        transform: rotate(-40deg);
-      }
-
-      .e-splitter
-        .e-split-bar.e-split-bar-horizontal
-        .e-navigate-arrow.e-arrow-right::before {
-        background-color: #276ef2;
-        opacity: 1;
-        transform: rotate(-40deg);
-      }
-
-      .e-splitter
-        .e-split-bar.e-split-bar-horizontal
-        .e-navigate-arrow.e-arrow-right::after {
-        background-color: #276ef2;
-        opacity: 1;
-        transform: rotate(40deg);
-      }
-/* Not Needed As of Now */
-
-/* #shortCutDialog .e-dlg-header-content + .e-dlg-content {
-    padding: 0px;
-}
-
-.db-shortcut-template-div {
-    padding: 5px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    border-bottom: 1px solid #D4D4D4;
-}
-
-#shortcutContainerDiv:last-child {
-    border-bottom: 0px;
-}
-
-#shortCutDialog .col-xs-6 {
-    padding: 0px;
-} */
