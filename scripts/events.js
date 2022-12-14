@@ -36,6 +36,7 @@ var DiagramClientSideEvents = (function () {
                     document.getElementById('multipleChildPropertyContainer').style.display = 'none';
                     document.getElementById('propertyHeader').innerText = "Properties";
                     textareaObj.value = "";
+                    UtilityMethods.prototype.onClickDisable(true);
                 }
             }
         }
@@ -310,11 +311,11 @@ var DiagramClientSideEvents = (function () {
             }
             obj.addInfo = { level: obj.data.level, orientation: obj.data.orientation };
             if (obj.data.orientation === "Left" || obj.data.orientation === "Root") {
-                obj.expandIcon = { shape: 'None', height: 10, width: 10, fill: 'black', borderColor: 'white', offset: { x: 0.95, y: 0.5 } };
-                obj.collapseIcon = { shape: 'None', height: 10, width: 10, fill: 'black', borderColor: 'white', offset: { x: 0.95, y: 0.5 } };
+                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.95, y: 0.5 } };
+                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.95, y: 0.5 } };
             } else {
-                obj.expandIcon = { shape: 'None', height: 10, width: 10, fill: 'black', borderColor: 'white', offset: { x: 0.05, y: 0.5 } };
-                obj.collapseIcon = { shape: 'None', height: 10, width: 10, fill: 'black', borderColor: 'white', offset: { x: 0.05, y: 0.5 } };
+                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.05, y: 0.5 } };
+                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.05, y: 0.5 } };
             }
             obj.shape.cornerRadius = empInfo.branch === 'Root' ? 5 : 0;
             obj.shape = empInfo.branch === 'Root' ? { type: 'Basic', shape: 'Ellipse' } : { type: 'Basic', shape: 'Rectangle' };
@@ -332,12 +333,12 @@ var DiagramClientSideEvents = (function () {
             }
             hideUserHandle('Top');
         }
-        setTimeout( function() {
+        setTimeout(function () {
             if (mindMapPatternTarget) {
                 utilityMethods.mindmapPatternChange(mindMapPatternTarget);
             }
         }, 0);
-       
+
         return obj;
 
     };
@@ -474,6 +475,14 @@ var DiagramClientSideEvents = (function () {
             node.data.orientation = target.data.branch !== "Root" ? target.data.branch : updateData.branch;
             node.addInfo.level = target.data.level + 1;
             node.addInfo.orientation = target.data.branch !== "Root" ? target.data.branch : updateData.branch;
+        }
+    }
+
+    DiagramClientSideEvents.prototype.scrollChange = function (args) {
+        var zoomCurrentValue = document.getElementById("btnZoomIncrement");
+        if (zoomCurrentValue && zoomCurrentValue.ej2_instances) {
+            zoomCurrentValue = document.getElementById("btnZoomIncrement").ej2_instances[0];
+            zoomCurrentValue.content = Math.round(diagram.scrollSettings.currentZoom * 100) + ' %';
         }
     }
 

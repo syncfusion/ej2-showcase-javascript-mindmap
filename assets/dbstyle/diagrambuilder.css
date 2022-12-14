@@ -154,86 +154,6 @@ input, button, select, textarea {
     height:calc(100% );
 }
 
-.db-palette-more-shapes {
-    background-color:#F1F1F1; 
-    width:100%;
-    height: 28px;
-    padding: 0px 8px;
-    border-top: 1px solid #CBCBCB;
-    text-align: right;
-    bottom: 0px;
-    position: absolute;
-}
-
-.db-palette-more-shapes-text {
-    color: #000000;
-    font-size: 12px;
-    line-height: 28px;
-    font-weight: normal;
-    float: right;
-    width: calc(100% - 20px);
-    cursor: pointer;
-}
-
-.db-overview-parent {
-    bottom: 28px;
-    position: absolute;
-    width: 255px;
-    height: 200px;
-    background-color:white;
-    box-shadow: -3px 0px 15px rgba(0, 0, 0, 0.25);
-    display: none;
-}
-
-.sidebar.show-overview .db-overview-parent {
-    display: block;
-}
-
-.db-overview {
-    float: left;
-    height: 100%;
-    cursor: pointer;
-}
-
-.db-overview span {
-    font-size: 18px;
-    text-align: center;
-    background-image: url('./common_images/Overview - Normal.svg');
-    background-repeat: no-repeat;
-    width: 16px;
-    height: 16px;
-    margin: 6px 0px;
-    display: block;
-    pointer-events: none;
-}
-
-.db-overview.active span {
-    background-image: url('./common_images/Overview.svg');
-}
-
-#symbolpalette_search {
-    background-color: white;
-    border-color: #CBCBCB;
-    border-style: solid;
-    border-width: 1px 0px 1px 1px;
-    width: 100%;
-    margin: 0px;
-    height: 40px !important;
-}
-
-#symbolpalette_container {
-    border-width: 0px;
-}
-
-#textEnter {
-    padding: 5px 5px 5px 10px;
-    text-indent: 5px;
-}
-
-#iconSearch {
-    padding-right: 10px;
-}
-
 .db-property-editor-container {
     width: 270px;
     background: #f2f2f2;
@@ -244,47 +164,6 @@ input, button, select, textarea {
     border-left: 1px solid #CBCBCB;
     border-top: 1px solid #CBCBCB;
 }
-
-/* SymbolPalette - Customization Start */
-
-.e-accordion .e-acrdn-item.e-select {
-    border-bottom: 1px solid #CBCBCB;
-}
-
-.e-accordion .e-acrdn-item.e-selected.e-select {
-    border-top: none;
-    /* border-bottom: none; */
-}
-
-.e-accordion .e-acrdn-item.e-select.e-expand-state {
-    border-bottom: 1px solid #CBCBCB;
-}
-
-.e-accordion .e-acrdn-item.e-select.e-selected.e-active > .e-acrdn-header {
-    border-bottom: 1px solid #CBCBCB;
-}
-
-.e-accordion .e-acrdn-item .e-acrdn-header .e-acrdn-header-content {
-    color: #000000;
-    font-weight: 400;
-    font-size: 12px;
-}
-
-.e-accordion .e-acrdn-item.e-select.e-selected.e-expand-state > .e-acrdn-header .e-acrdn-header-content,
-.e-accordion .e-acrdn-item.e-select.e-expand-state > .e-acrdn-header .e-acrdn-header-content {
-    color: #046AE5;
-}
-
-.e-accordion .e-acrdn-item.e-expand-state.e-select:not(.e-selected) > .e-acrdn-header:focus {
-    background: #ffffff;
-}
-
-.e-accordion .e-acrdn-item.e-item-focus.e-expand-state.e-select {
-    border-color:  #CBCBCB;
-    border-top:none;
-}
-
-/* SymbolPalette - Customization End */
 
 /* Window Show/Hide Customization - start */
 
@@ -388,40 +267,6 @@ input, button, select, textarea {
 
 /* Show/Hide Diagram's Ruler/Grid Customization - End */
 
-
-/* Page Options Customizaion - Start */
-
-.db-more-diagram-options-container {
-    height: 28px;
-    background-color:#F1F1F1; 
-    border-top: 1px solid #CBCBCB;
-    border-left: 1px solid #CBCBCB;
-}
-
-#pageOptionList {
-    height: 100%;
-}
-
-.db-more-diagram-options-container .e-btn {
-    text-transform: none;
-    font-weight: 400;
-    font-size: 12px;
-    box-shadow: 0 0 0 0;
-    height: 100%;
-    border-width: 0px 1px 0px 0px;
-    border-color: #D4D4D4;
-    color: #515151;
-    background-color: #f0f0f0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.db-more-diagram-options-container .e-btn.db-active-page {
-    background-color: #ffffff;
-}
-
-/* Page Options Customizaion - End */
-
 /* Diagram Adorner Layer, Ruler, Context Menu Customization - Start */
 
 .e-diagram #diagram_editBox {
@@ -435,61 +280,6 @@ input, button, select, textarea {
     stroke: #E0E0E0;
 }
 
-.e-contextmenu-wrapper.e-diagram-menu ul {
-    font-size: 12px;
-    padding: 0px;
-}
-
-.e-diagram-menu.e-contextmenu-wrapper .e-contextmenu .e-menu-item .e-caret {
-    font-size: 10px;
-}
-
-.e-diagram-resize-handle,
-.e-diagram-endpoint-handle {
-    fill: #046AE5;
-    stroke: #ffffff;
-    stroke-width: 1;
-}
-
-.e-diagram-endpoint-handle.e-connected {
-    stroke: #046AE5;
-}
-
-.e-diagram-resize-handle.e-disabled {
-    fill: #aaaaaa;
-    stroke-width: 1;
-    stroke: #ffffff;
-    opacity: 1;
-}
-
-.e-diagram-bezier-handle {
-    fill: #666666;
-}
-
-.e-diagram-bezier-line {
-    stroke: #666666;
-}
-
-.e-diagram-border,
-.e-diagram-pivot-line {
-    stroke: #000000;
-}
-
-.e-diagram .e-diagram-text-edit {
-    border-color: #000000;
-}
-
-.db-current-diagram-container.mindmap-diagram .e-diagram-border,
-.db-current-diagram-container.orgchart-diagram .e-diagram-border {
-    stroke: #7d7d7d;
-    stroke-width: 1px;
-    stroke-dasharray: 6,3;
-}
-
-.e-diagram-border.e-disabled {
-    stroke: #909090;
-    opacity: 1;
-}
 
 .e-diagram-highlighter {
     stroke-width: 3;
@@ -534,13 +324,6 @@ input, button, select, textarea {
     stroke: white;
 }
 
-.e-symbolpalette .e-symbol-hover:hover {
-    background: #EEEEEE;
-}
-
-.e-symbol-draggable.e-symbol-hover.e-symbol-selected {
-    background: #cccccc;
-}
 
 /* Diagram Adorner Layer, Ruler, Context Menu Customization - End */
 
@@ -1295,7 +1078,6 @@ input[type="color"]::-moz-color-swatch {
 .e-dialog .e-dlg-header-content .e-dlg-header {
     font-size: 14px;
     font-weight: 500;
-    margin-top: -5px;
 }
 
 .e-dialog .e-dlg-header-content + .e-dlg-content {
@@ -2207,22 +1989,6 @@ input.db-layer-edit {
 
 /* MindMap and OrgChart Property Panel Customization End */
 
-/* Common Primary Button Style - Start */
-
-.db-btn-primary {
-    background-color: #046AE5;
-    border: 1px solid #0058C1;
-    border-radius: 3px;
-    color: white;
-}
-
-.db-btn-primary:hover,
-.db-btn-primary:focus {
-    background-color: #0058C1;
-    color: white;
-}
-
-/* Common Primary Button Style - End */
 
 /* Animation At Initial Rendering start */
 

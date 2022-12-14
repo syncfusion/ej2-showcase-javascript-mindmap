@@ -141,6 +141,7 @@ var UtilityMethods = (function () {
             toolbarObj.items[7].disabled = true;
             toolbarObj.items[8].disabled = true;
         }
+        this.removeSelectedToolbarItem();
     };
     UtilityMethods.prototype.download = function (data) {
         if (window.navigator.msSaveBlob) {
@@ -346,7 +347,7 @@ var UtilityMethods = (function () {
             if (itemText === 'Themes' || itemText === 'Show Rulers') {
                 return true;
             }
-            if (itemText === 'Show Shortcuts') {
+            if (itemText === 'Show Shortcuts' && document.getElementById('overlay').style.display === 'none') {
                 return true;
             }
 

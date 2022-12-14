@@ -91,9 +91,8 @@ var DropDownDataSources = (function () {
     };
     DropDownDataSources.prototype.zoomMenuItems = function () {
         var items = [
-            { text: '400%' }, { text: '300%' }, { text: '200%' }, { text: '150%' },
-            { text: '100%' }, { text: '75%' }, { text: '50%' }, { text: '25%' }, { separator: true },
-            { text: 'Fit To Screen' }
+            { text: 'Zoom In' },{ text: 'Zoom Out' },{ text: 'Zoom to Fit' },{ text: 'Zoom to 50%' },
+            { text: 'Zoom to 100%' },{ text: 'Zoom to 200%' },
         ];
         return items;
     };
