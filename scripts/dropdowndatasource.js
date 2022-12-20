@@ -121,7 +121,7 @@ var DropDownDataSources = (function () {
         var items = [
             { text: 'Rectangle', value: 'Rectangle' }, { text: 'Ellipse', value: 'Ellipse' },
             { text: 'Star', value: 'Star' }, { text: 'Cloud', value: 'Cloud' },
-            { text: 'Free hand', value: 'Free hand' },
+            { text: 'Free hand', value: 'Free hand' }, { text: 'Line', value: 'Line' },
         ];
         return items;
     };

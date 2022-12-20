@@ -626,7 +626,7 @@ function keyPress(args) {
         addTreeNode();
     } else {
         setTimeout(() => {
-         console.log(args);
+            console.log(args);
         }, 0);
     }
 }
@@ -1116,7 +1116,7 @@ var draggableCheckbox = new ej.buttons.CheckBox({
     label: 'Drag & Drop',
     checked: false,
     change: function (args) {
-       // isExpanded = args.checked;
+        // isExpanded = args.checked;
         for (var i = 0; i < diagram.nodes.length; i++) {
             diagram.nodes[i].constraints = args.checked ? ej.diagrams.NodeConstraints.Default | ej.diagrams.NodeConstraints.AllowDrop : ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
         }
@@ -1182,19 +1182,11 @@ var diagramRadioButton = new ej.buttons.RadioButton({
         diagram.dataBind();
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('treeview').style.display = 'none';
+        document.getElementById('shortcutDiv').style.visibility = 'visible';
+        btnWindowMenu.items[2].iconCss = document.getElementById('shortcutDiv').style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
         diagram.fitToPage();
-        setTimeout( () => {
-            var node1 = {
-                id: 'textNode', width: 400, height: 420, offsetX: diagram.scrollSettings.viewPortWidth - 230, offsetY: 210,
-                shape: { type: 'HTML', content: getShortCutString() }, style: { strokeWidth: 0 },
-                excludeFromLayout: true,
-                annotations: [{ constraints: ej.diagrams.AnnotationConstraints.ReadOnly }],
-                constraints: ej.diagrams.NodeConstraints.Default & ~(ej.diagrams.NodeConstraints.Delete | ej.diagrams.NodeConstraints.Drag | ej.diagrams.NodeConstraints.Select)
-            };
-            diagram.add(node1);
-            document.getElementById('diagram').querySelector('#closeIconDiv').onclick = onHideNodeClick.bind(this);
-        }, 0)
-        
+
+
     }
 });
 diagramRadioButton.appendTo('#diagramView');
@@ -1211,7 +1203,7 @@ var textRadioButton = new ej.buttons.RadioButton({
         treeObj.dataBind();
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('treeview').style.display = 'block';
-
+        document.getElementById('shortcutDiv').style.visibility = 'hidden';
     }
 });
 textRadioButton.appendTo('#textView');
@@ -1350,39 +1342,39 @@ function updateStrokeColor(obj, args) {
 }
 
 
-function zoomChange(args){
+function zoomChange(args) {
     var zoomCurrentValue = document.getElementById("btnZoomIncrement").ej2_instances[0];
-        var currentZoom = diagram.scrollSettings.currentZoom;
-        var zoom = {};
-        switch (args.item.text) {
-            case 'Zoom In':
-                diagram.zoomTo({ type: 'ZoomIn', zoomFactor: 0.2 });
-                zoomCurrentValue.content = (diagram.scrollSettings.currentZoom * 100).toFixed() + '%';
-                break;
-            case 'Zoom Out':
-                diagram.zoomTo({ type: 'ZoomOut', zoomFactor: 0.2 });
-                zoomCurrentValue.content = (diagram.scrollSettings.currentZoom * 100).toFixed() + '%';
-                break;
-            case 'Zoom to Fit':
-                diagram.fitToPage({ mode: 'Page', region: 'Content'});
-                zoomCurrentValue.content = diagram.scrollSettings.currentZoom;
-                break;
-            case 'Zoom to 50%':
-                zoom.zoomFactor = (0.5 / currentZoom) - 1;
-                diagram.zoomTo(zoom);
-                break;
-            case 'Zoom to 100%':
-                zoom.zoomFactor = (1 / currentZoom) - 1;
-                diagram.zoomTo(zoom);
-                break;
-            case 'Zoom to 200%':
-                zoom.zoomFactor = (2 / currentZoom) - 1;
-                diagram.zoomTo(zoom);
-                break;
-        }
-      
-        zoomCurrentValue.content = Math.round(diagram.scrollSettings.currentZoom*100) + ' %';
-        
+    var currentZoom = diagram.scrollSettings.currentZoom;
+    var zoom = {};
+    switch (args.item.text) {
+        case 'Zoom In':
+            diagram.zoomTo({ type: 'ZoomIn', zoomFactor: 0.2 });
+            zoomCurrentValue.content = (diagram.scrollSettings.currentZoom * 100).toFixed() + '%';
+            break;
+        case 'Zoom Out':
+            diagram.zoomTo({ type: 'ZoomOut', zoomFactor: 0.2 });
+            zoomCurrentValue.content = (diagram.scrollSettings.currentZoom * 100).toFixed() + '%';
+            break;
+        case 'Zoom to Fit':
+            diagram.fitToPage({ mode: 'Page', region: 'Content' });
+            zoomCurrentValue.content = diagram.scrollSettings.currentZoom;
+            break;
+        case 'Zoom to 50%':
+            zoom.zoomFactor = (0.5 / currentZoom) - 1;
+            diagram.zoomTo(zoom);
+            break;
+        case 'Zoom to 100%':
+            zoom.zoomFactor = (1 / currentZoom) - 1;
+            diagram.zoomTo(zoom);
+            break;
+        case 'Zoom to 200%':
+            zoom.zoomFactor = (2 / currentZoom) - 1;
+            diagram.zoomTo(zoom);
+            break;
+    }
+
+    zoomCurrentValue.content = Math.round(diagram.scrollSettings.currentZoom * 100) + ' %';
+
 }
 function pasteClick() {
     toolbarObj.items[32].disabled = false;
@@ -1425,7 +1417,7 @@ function historyChange() {
 }
 
 window.onload = function () {
-    document.getElementById('diagram').querySelector('#closeIconDiv').onclick = onHideNodeClick.bind(this);
+    document.getElementById('closeIconDiv').onclick = onHideNodeClick.bind(this);
     var element = document.getElementById('btnHideToolbar');
     bounds = element.getBoundingClientRect();
     document.onmouseover = menumouseover.bind(this);
@@ -1464,9 +1456,9 @@ function menumouseover(args) {
 }
 
 function onHideNodeClick(args) {
-    var node1 = diagram.getObject('textNode');
-    node1.visible = !node1.visible;
-    btnWindowMenu.items[2].iconCss = !node1.visible ? '' : 'sf-icon-check-tick';
+    var node1 = document.getElementById('shortcutDiv');
+    node1.style.visibility = node1.style.visibility === "hidden" ? node1.style.visibility = "visible" : node1.style.visibility = "hidden";
+    btnWindowMenu.items[2].iconCss = node1.style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
     diagram.dataBind();
 }
 
@@ -1525,7 +1517,7 @@ function addSibilingChild() {
 }
 
 function getShortCutString() {
-    return '<div style="width: 400px; height: 420px; padding: 10px; background-color: #FFF7B5; border: 1px solid #FFF7B5">' +
+    return '<div style="width: 400px; height: 440px; padding: 10px; background-color: #FFF7B5; border: 1px solid #FFF7B5">' +
         '<div id="closeIconDiv" style="float: right; width: 22px; height: 22px; border: 1px solid #FFF7B5">' +
         '<span class="sf-icon-close" style="font-size:14px;cursor:pointer;"></span>' +
         '</div>' +
@@ -1561,6 +1553,14 @@ function getShortCutString() {
         '<li>' +
         '<span class="db-html-font-medium">Delete / Backspace : </span>' +
         '<span class="db-html-font-normal">Delete a topic</span>' +
+        '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div>' +
+        '<ul>' +
+        '<li>' +
+        '<span class="db-html-font-medium">Arrow(Up, Down, Left, Right) : </span>' +
+        '<span class="db-html-font-normal">Navigate between topics</span>' +
         '</li>' +
         '</ul>' +
         '</div>' +

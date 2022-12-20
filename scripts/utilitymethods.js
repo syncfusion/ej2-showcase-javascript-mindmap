@@ -107,9 +107,8 @@ var UtilityMethods = (function () {
                 args.item.iconCss = args.item.iconCss ? '' : 'sf-icon-check-tick';
                 break;
             case 'showshortcuts':
-                var node1 = diagram.getObject('textNode');
-                node1.visible = !node1.visible;
-                diagram.dataBind();
+                var node1 = document.getElementById('shortcutDiv');
+                node1.style.visibility = node1.style.visibility === "hidden" ? node1.style.visibility = "visible" : node1.style.visibility = "hidden";
                 args.item.iconCss = args.item.iconCss ? '' : 'sf-icon-check-tick';
                 break;
             case 'showpagebreaks':
@@ -587,5 +586,108 @@ var UtilityMethods = (function () {
                 break;
         }
     }
+    UtilityMethods.prototype.navigateChild = function (direction) {
+
+        var node = null;
+        if (direction === 'top' || direction === 'bottom') {
+            var sameLevelNodes = this.getSameLevelNodes();
+            var index = sameLevelNodes.indexOf(diagram.selectedItems.nodes[0]);
+            node = direction === 'top' ? sameLevelNodes[index - 1] : sameLevelNodes[index + 1];
+        }
+        else {
+            node = this.getMinDistanceNode(diagram, direction);
+        }
+        if (node) {
+            diagram.clearSelection();
+            diagram.select([node]);
+        }
+    }
+    UtilityMethods.prototype.getSameLevelNodes = function () {
+        var sameLevelNodes = [];
+        if (diagram.selectedItems.nodes.length > 0) {
+            var node = diagram.selectedItems.nodes[0];
+            var orientation_1 = node.addInfo.orientation.toString();
+            var connector = getConnector(diagram.connectors, node.inEdges[0]);
+            var parentNode = getNode(diagram.nodes, connector.sourceID);
+            for (var i = 0; i < parentNode.outEdges.length; i++) {
+                connector = getConnector(diagram.connectors, parentNode.outEdges[i]);
+                var childNode = getNode(diagram.nodes, connector.targetID);
+                if (childNode) {
+                    var childOrientation = childNode.addInfo.orientation.toString();
+                    if (orientation_1 === childOrientation) {
+                        sameLevelNodes.push(childNode);
+                    }
+                }
+            }
+        }
+        return sameLevelNodes;
+    };
+    UtilityMethods.prototype.getMinDistanceNode = function (diagram, direction) {
+        var node = diagram.selectedItems.nodes[0];
+        var parentBounds = node.wrapper.bounds;
+        var childBounds = null;
+        var oldChildBoundsTop = 0;
+        var childNode = null;
+        var lastChildNode = null;
+        var leftOrientationFirstChild = null, rightOrientationFirstChild = null;
+        if (node.data.orientation === "Root") {
+            var edges = node.outEdges;
+            for (var i = 0; i < edges.length; i++) {
+                var connector = getConnector(diagram.connectors, edges[i]);
+                childNode = getNode(diagram.nodes, connector.targetID);
+                var addInfo = childNode.addInfo;
+                if (addInfo.orientation.toString().toLowerCase() === direction) {
+                    if (direction === 'left' && leftOrientationFirstChild === null) {
+                        leftOrientationFirstChild = childNode;
+                    }
+                    if (direction === 'right' && rightOrientationFirstChild === null) {
+                        rightOrientationFirstChild = childNode;
+                    }
+                    childBounds = childNode.wrapper.bounds;
+                    if (parentBounds.top >= childBounds.top && (childBounds.top >= oldChildBoundsTop || oldChildBoundsTop === 0)) {
+                        oldChildBoundsTop = childBounds.top;
+                        lastChildNode = childNode;
+                    }
+                }
+            }
+            if (!lastChildNode) {
+                lastChildNode = direction === 'left' ? leftOrientationFirstChild : rightOrientationFirstChild;
+            }
+        }
+        else {
+            var edges = [];
+            var selecttype = '';
+            var orientation_2 = node.addInfo.orientation.toString();
+            if (orientation_2.toLowerCase() === 'left') {
+                edges = direction === 'left' ? node.outEdges : node.inEdges;
+                selecttype = direction === 'left' ? 'target' : 'source';
+            }
+            else {
+                edges = direction === 'right' ? node.outEdges : node.inEdges;
+                selecttype = direction === 'right' ? 'target' : 'source';
+            }
+            for (var i = 0; i < edges.length; i++) {
+                var connector = getConnector(diagram.connectors, edges[i]);
+                childNode = getNode(diagram.nodes, selecttype === 'target' ? connector.targetID : connector.sourceID);
+                if (childNode.data.orientation === "Root") {
+                    lastChildNode = childNode;
+                    break;
+                }
+                else {
+                    childBounds = childNode.wrapper.bounds;
+                    if (selecttype === 'target') {
+                        if (parentBounds.top >= childBounds.top && (childBounds.top >= oldChildBoundsTop || oldChildBoundsTop === 0)) {
+                            oldChildBoundsTop = childBounds.top;
+                            lastChildNode = childNode;
+                        }
+                    }
+                    else {
+                        lastChildNode = childNode;
+                    }
+                }
+            }
+        }
+        return lastChildNode;
+    };
     return UtilityMethods;
 }());

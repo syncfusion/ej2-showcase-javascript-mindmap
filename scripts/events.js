@@ -95,9 +95,9 @@ var DiagramClientSideEvents = (function () {
                         return true;
                     },
                     execute: function () {
-                        var node1 = diagram.getObject('textNode');
-                        node1.visible = !node1.visible;
-                        btnWindowMenu.items[2].iconCss = !node1.visible ? '' : 'sf-icon-check-tick';
+                        var node1 = document.getElementById('shortcutDiv');
+                        node1.style.visibility = node1.style.visibility === "hidden" ? node1.style.visibility = "visible" : node1.style.visibility = "hidden";
+                        btnWindowMenu.items[2].iconCss = node1.style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
                         diagram.dataBind();
                     },
                     gesture: {
@@ -284,18 +284,59 @@ var DiagramClientSideEvents = (function () {
                         keyModifiers: ej.diagrams.KeyModifiers.Control
                     }
                 },
+                {
+                    name: 'navigationDown',
+                    canExecute: function () {
+                        return true;
+                    },
+                    execute: function () {
+                        UtilityMethods.prototype.navigateChild('bottom');
+                    },
+                    gesture: {
+                        key: ej.diagrams.Keys.Down
+                    }
+                },
+                {
+                    name: 'navigationUp',
+                    canExecute: function () {
+                        return true;
+                    },
+                    execute: function () {
+                        UtilityMethods.prototype.navigateChild('up');
+                    },
+                    gesture: {
+                        key: ej.diagrams.Keys.Up
+                    }
+                },
+                {
+                    name: 'navigationLeft',
+                    canExecute: function () {
+                        return true;
+                    },
+                    execute: function () {
+                        UtilityMethods.prototype.navigateChild('right');
+                    },
+                    gesture: {
+                        key: ej.diagrams.Keys.Left
+                    }
+                },
+                {
+                    name: 'navigationRight',
+                    canExecute: function () {
+                        return true;
+                    },
+                    execute: function () {
+                        UtilityMethods.prototype.navigateChild('left');
+                    },
+                    gesture: {
+                        key: ej.diagrams.Keys.Right
+                    }
+                },
             ]
         };
         diagram.dataBind();
-        var node1 = {
-            id: 'textNode', width: 400, height: 420, offsetX: diagram.scrollSettings.viewPortWidth - 230, offsetY: 210,
-            shape: { type: 'HTML', content: getShortCutString() }, style: { strokeWidth: 0 },
-            excludeFromLayout: true,
-            annotations: [{ constraints: ej.diagrams.AnnotationConstraints.ReadOnly }],
-            constraints: ej.diagrams.NodeConstraints.Default & ~(ej.diagrams.NodeConstraints.Delete | ej.diagrams.NodeConstraints.Drag | ej.diagrams.NodeConstraints.Select)
-        };
-        diagram.add(node1);
     };
+
     DiagramClientSideEvents.prototype.getNodeDefaults = function (obj) {
         if (obj.id !== 'textNode' && obj.data) {
             obj.constraints = draggableCheckbox.checked ? ej.diagrams.NodeConstraints.Default | ej.diagrams.NodeConstraints.AllowDrop : ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
@@ -310,12 +351,15 @@ var DiagramClientSideEvents = (function () {
                 obj.data.orientation = empInfo.branch;
             }
             obj.addInfo = { level: obj.data.level, orientation: obj.data.orientation };
-            if (obj.data.orientation === "Left" || obj.data.orientation === "Root") {
-                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.95, y: 0.5 } };
-                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.95, y: 0.5 } };
+            if (obj.data.orientation === "Left") {
+                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 1, y: 0.5 } };
+                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 1, y: 0.5 } };
+            } else if (obj.data.orientation === "Root") {
+                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.5, y: 1 } };
+                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.5, y: 1 } };
             } else {
-                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.05, y: 0.5 } };
-                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0.05, y: 0.5 } };
+                obj.expandIcon = { shape: isExpanded ? 'Minus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0, y: 0.5 } };
+                obj.collapseIcon = { shape: isExpanded ? 'Plus' : 'None', height: 10, width: 10, fill: 'white', borderColor: 'black', offset: { x: 0, y: 0.5 } };
             }
             obj.shape.cornerRadius = empInfo.branch === 'Root' ? 5 : 0;
             obj.shape = empInfo.branch === 'Root' ? { type: 'Basic', shape: 'Ellipse' } : { type: 'Basic', shape: 'Rectangle' };
