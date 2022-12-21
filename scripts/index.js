@@ -1,5 +1,4 @@
 ej.diagrams.Diagram.Inject(ej.diagrams.DataBinding, ej.diagrams.MindMap, ej.diagrams.HierarchicalTree);
-ej.base.enableRipple(true);
 // Initialize nodes for diagram
 var dropDownDataSources = new DropDownDataSources();
 var utilityMethods = new UtilityMethods();
@@ -309,7 +308,7 @@ function getMindMapShape(parentNode) {
     }
     else {
         node = {
-            minWidth: 100, maxWidth: 100,  shape: { type: 'Basic', shape: 'Rectangle' },
+            minWidth: 100, maxWidth: 100, shape: { type: 'Basic', shape: 'Rectangle' },
             annotations: [{ content: '' }],
             style: { fill: '#000000', strokeColor: '#000000' },
             addInfo: { level: addInfo.level + 1 },
@@ -589,7 +588,8 @@ var diagram = new ej.diagrams.Diagram({
     keyDown: function (args) { DiagramClientSideEvents.prototype.keyDown(args); },
     historyChange: function (args) { DiagramClientSideEvents.prototype.historyChange(args); },
     textEdit: function (args) { DiagramClientSideEvents.prototype.textEdit(args); },
-    drop: function (args) { DiagramClientSideEvents.prototype.drop(args); }
+    drop: function (args) { DiagramClientSideEvents.prototype.drop(args); },
+    scrollChange: function (args) { DiagramClientSideEvents.prototype.scrollChange(args); }
 });
 
 // Show / Hide toolbar function implementation
@@ -624,6 +624,10 @@ treeObj.appendTo('#tree');
 function keyPress(args) {
     if (args.event.key === 'Enter') {
         addTreeNode();
+    } else {
+        setTimeout(() => {
+            console.log(args);
+        }, 0);
     }
 }
 
@@ -784,6 +788,7 @@ var PaperSize = (function () {
 
 var printDialog = new ej.popups.Dialog({
     width: '335px',
+    height: '360px',
     header: 'Print Diagram',
     target: document.body,
     isModal: true,
@@ -1111,7 +1116,7 @@ var draggableCheckbox = new ej.buttons.CheckBox({
     label: 'Drag & Drop',
     checked: false,
     change: function (args) {
-        isExpanded = args.checked;
+        // isExpanded = args.checked;
         for (var i = 0; i < diagram.nodes.length; i++) {
             diagram.nodes[i].constraints = args.checked ? ej.diagrams.NodeConstraints.Default | ej.diagrams.NodeConstraints.AllowDrop : ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
         }
@@ -1177,7 +1182,11 @@ var diagramRadioButton = new ej.buttons.RadioButton({
         diagram.dataBind();
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('treeview').style.display = 'none';
+        document.getElementById('shortcutDiv').style.visibility = 'visible';
+        btnWindowMenu.items[2].iconCss = document.getElementById('shortcutDiv').style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
         diagram.fitToPage();
+
+
     }
 });
 diagramRadioButton.appendTo('#diagramView');
@@ -1188,11 +1197,13 @@ var textRadioButton = new ej.buttons.RadioButton({
     value: 'Text View',
     checked: false,
     change: function (args) {
+        diagram.clearSelection();
         diagramRadioButton.checked = false;
         treeObj.fields.dataSource = new ej.data.DataManager(workingData);
         treeObj.dataBind();
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('treeview').style.display = 'block';
+        document.getElementById('shortcutDiv').style.visibility = 'hidden';
     }
 });
 textRadioButton.appendTo('#textView');
@@ -1333,43 +1344,37 @@ function updateStrokeColor(obj, args) {
 
 function zoomChange(args) {
     var zoomCurrentValue = document.getElementById("btnZoomIncrement").ej2_instances[0];
-    if (args.item.text === 'Custom') {
-        var ss = '';
-    } else if (args.item.text === 'Fit To Screen') {
-        zoomCurrentValue.content = diagram.scrollSettings.currentZoom = 'Fit ...';
-        diagram.fitToPage({ mode: 'Page', region: 'Content', margin: { left: 0, top: 0, right: 0, bottom: 0 } });
-    } else {
-        var currentZoom = diagram.scrollSettings.currentZoom;
-        var zoom = {};
-        switch (args.item.text) {
-            case '400%':
-                zoom.zoomFactor = (4 / currentZoom) - 1;
-                break;
-            case '300%':
-                zoom.zoomFactor = (3 / currentZoom) - 1;
-                break;
-            case '200%':
-                zoom.zoomFactor = (2 / currentZoom) - 1;
-                break;
-            case '150%':
-                zoom.zoomFactor = (1.5 / currentZoom) - 1;
-                break;
-            case '100%':
-                zoom.zoomFactor = (1 / currentZoom) - 1;
-                break;
-            case '75%':
-                zoom.zoomFactor = (0.75 / currentZoom) - 1;
-                break;
-            case '50%':
-                zoom.zoomFactor = (0.5 / currentZoom) - 1;
-                break;
-            case '25%':
-                zoom.zoomFactor = (0.25 / currentZoom) - 1;
-                break;
-        }
-        zoomCurrentValue.content = diagram.scrollSettings.currentZoom = args.item.text;
-        diagram.zoomTo(zoom);
+    var currentZoom = diagram.scrollSettings.currentZoom;
+    var zoom = {};
+    switch (args.item.text) {
+        case 'Zoom In':
+            diagram.zoomTo({ type: 'ZoomIn', zoomFactor: 0.2 });
+            zoomCurrentValue.content = (diagram.scrollSettings.currentZoom * 100).toFixed() + '%';
+            break;
+        case 'Zoom Out':
+            diagram.zoomTo({ type: 'ZoomOut', zoomFactor: 0.2 });
+            zoomCurrentValue.content = (diagram.scrollSettings.currentZoom * 100).toFixed() + '%';
+            break;
+        case 'Zoom to Fit':
+            diagram.fitToPage({ mode: 'Page', region: 'Content' });
+            zoomCurrentValue.content = diagram.scrollSettings.currentZoom;
+            break;
+        case 'Zoom to 50%':
+            zoom.zoomFactor = (0.5 / currentZoom) - 1;
+            diagram.zoomTo(zoom);
+            break;
+        case 'Zoom to 100%':
+            zoom.zoomFactor = (1 / currentZoom) - 1;
+            diagram.zoomTo(zoom);
+            break;
+        case 'Zoom to 200%':
+            zoom.zoomFactor = (2 / currentZoom) - 1;
+            diagram.zoomTo(zoom);
+            break;
     }
+
+    zoomCurrentValue.content = Math.round(diagram.scrollSettings.currentZoom * 100) + ' %';
+
 }
 function pasteClick() {
     toolbarObj.items[32].disabled = false;
@@ -1412,7 +1417,7 @@ function historyChange() {
 }
 
 window.onload = function () {
-    document.getElementById('diagram').querySelector('#closeIconDiv').onclick = onHideNodeClick.bind(this);
+    document.getElementById('closeIconDiv').onclick = onHideNodeClick.bind(this);
     var element = document.getElementById('btnHideToolbar');
     bounds = element.getBoundingClientRect();
     document.onmouseover = menumouseover.bind(this);
@@ -1448,12 +1453,12 @@ function menumouseover(args) {
             }
         }
     }
-  }
+}
 
 function onHideNodeClick(args) {
-    var node1 = diagram.getObject('textNode');
-    node1.visible = !node1.visible;
-    btnWindowMenu.items[2].iconCss = !node1.visible ? '' : 'sf-icon-check-tick';
+    var node1 = document.getElementById('shortcutDiv');
+    node1.style.visibility = node1.style.visibility === "hidden" ? node1.style.visibility = "visible" : node1.style.visibility = "hidden";
+    btnWindowMenu.items[2].iconCss = node1.style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
     diagram.dataBind();
 }
 
@@ -1512,7 +1517,7 @@ function addSibilingChild() {
 }
 
 function getShortCutString() {
-    return '<div style="width: 400px; height: 420px; padding: 10px; background-color: #FFF7B5; border: 1px solid #FFF7B5">' +
+    return '<div style="width: 400px; height: 440px; padding: 10px; background-color: #FFF7B5; border: 1px solid #FFF7B5">' +
         '<div id="closeIconDiv" style="float: right; width: 22px; height: 22px; border: 1px solid #FFF7B5">' +
         '<span class="sf-icon-close" style="font-size:14px;cursor:pointer;"></span>' +
         '</div>' +
@@ -1548,6 +1553,14 @@ function getShortCutString() {
         '<li>' +
         '<span class="db-html-font-medium">Delete / Backspace : </span>' +
         '<span class="db-html-font-normal">Delete a topic</span>' +
+        '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div>' +
+        '<ul>' +
+        '<li>' +
+        '<span class="db-html-font-medium">Arrow(Up, Down, Left, Right) : </span>' +
+        '<span class="db-html-font-normal">Navigate between topics</span>' +
         '</li>' +
         '</ul>' +
         '</div>' +
@@ -1665,6 +1678,8 @@ var btnFileMenu = new ej.splitbuttons.DropDownButton({
     content: 'File',
     select: function (args) { UtilityMethods.prototype.menuClick(args) },
     beforeItemRender: beforeItemRender,
+    beforeOpen: arrangeMenuBeforeOpen,
+    beforeClose: arrangeMenuBeforeClose
 });
 btnFileMenu.appendTo('#btnFileMenu');
 
@@ -1674,6 +1689,8 @@ var btnEditMenu = new ej.splitbuttons.DropDownButton({
     content: 'Edit',
     select: function (args) { UtilityMethods.prototype.menuClick(args) },
     beforeItemRender: beforeItemRender,
+    beforeOpen: arrangeMenuBeforeOpen,
+    beforeClose: arrangeMenuBeforeClose
 });
 btnEditMenu.appendTo('#btnEditMenu');
 
@@ -1682,6 +1699,8 @@ var btnViewMenu = new ej.splitbuttons.DropDownButton({
     items: DropDownDataSources.prototype.getViewMenuItems(),
     content: 'View',
     select: function (args) { UtilityMethods.prototype.menuClick(args) },
+    beforeOpen: arrangeMenuBeforeOpen,
+    beforeClose: arrangeMenuBeforeClose
 });
 btnViewMenu.appendTo('#btnViewMenu');
 
@@ -1690,8 +1709,30 @@ var btnWindowMenu = new ej.splitbuttons.DropDownButton({
     items: DropDownDataSources.prototype.getWindowMenuItems(),
     content: 'Window',
     select: function (args) { UtilityMethods.prototype.menuClick(args) },
+    beforeItemRender: beforeItemRender,
+    beforeOpen: arrangeMenuBeforeOpen,
+    beforeClose: arrangeMenuBeforeClose
 });
 btnWindowMenu.appendTo('#btnWindowMenu');
+
+function arrangeMenuBeforeOpen(args) {
+    for (var i = 0; i < args.element.children.length; i++) {
+        args.element.children[i].style.display = 'block';
+    }
+    //(args.element.children[0]).style.display = 'block';
+    if (args.event && ej.base.closest(args.event.target, '.e-dropdown-btn') !== null) {
+        args.cancel = true;
+    }
+}
+
+function arrangeMenuBeforeClose(args) {
+    if (args.event && ej.base.closest(args.event.target, '.e-dropdown-btn') !== null) {
+        args.cancel = true;
+    }
+    if (!args.element) {
+        args.cancel = true;
+    }
+}
 
 
 // Events for menu bar

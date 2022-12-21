@@ -91,9 +91,8 @@ var DropDownDataSources = (function () {
     };
     DropDownDataSources.prototype.zoomMenuItems = function () {
         var items = [
-            { text: '400%' }, { text: '300%' }, { text: '200%' }, { text: '150%' },
-            { text: '100%' }, { text: '75%' }, { text: '50%' }, { text: '25%' }, { separator: true },
-            { text: 'Fit To Screen' }
+            { text: 'Zoom In' },{ text: 'Zoom Out' },{ text: 'Zoom to Fit' },{ text: 'Zoom to 50%' },
+            { text: 'Zoom to 100%' },{ text: 'Zoom to 200%' },
         ];
         return items;
     };
@@ -122,7 +121,7 @@ var DropDownDataSources = (function () {
         var items = [
             { text: 'Rectangle', value: 'Rectangle' }, { text: 'Ellipse', value: 'Ellipse' },
             { text: 'Star', value: 'Star' }, { text: 'Cloud', value: 'Cloud' },
-            { text: 'Free hand', value: 'Free hand' },
+            { text: 'Free hand', value: 'Free hand' }, { text: 'Line', value: 'Line' },
         ];
         return items;
     };
@@ -151,12 +150,12 @@ var DropDownDataSources = (function () {
 
     DropDownDataSources.prototype.toolbarItems = function () {
         let items = [
-            { prefixIcon: 'sf-icon-undo', tooltipText: 'Undo', disabled: true },
+            { prefixIcon: 'sf-icon-undo', tooltipText: 'Undo', disabled: false },
             { prefixIcon: 'sf-icon-redo', tooltipText: 'Redo', disabled: true },
             {
                 type: 'Separator'
             },
-            { prefixIcon: 'sf-icon-pointer tb-icons', tooltipText: 'Select Tool' },
+            { prefixIcon: 'sf-icon-pointer tb-icons', tooltipText: 'Select Tool', cssClass:'tb-item-middle tb-item-selected' },
             { prefixIcon: 'sf-icon-Pan tb-icons', tooltipText: 'Pan Tool', cssClass: 'tb-item-start' },
             {
                 type: 'Separator'
@@ -176,23 +175,15 @@ var DropDownDataSources = (function () {
             {
                 tooltipText: 'Diagram View', disabled: false, template: "<input id='diagramView' type='radio'>"
             },
+            
             {
                 tooltipText: 'Text View', disabled: false, template: "<input id='textView' type='radio' style='margin-left:2px'>"
-            },
-            {
-                type: 'Separator', template:"<div></div>"
             },
             {
                 type: 'Separator'
             },
             {
-                type: 'Separator', template:"<div style='margin-left:10px'></div>"
-            },
-            {
                 cssClass: 'tb-item-end tb-zoom-dropdown-btn', template: '<button id="btnZoomIncrement"></button>'
-            },
-            {
-                type: 'Separator', template:"<div style='margin-left:10px'></div>"
             },
             {
                 type: 'Separator'
