@@ -999,7 +999,7 @@
 .e-toolbar .e-toolbar-items .e-toolbar-item > * {
   align-self: center;
   text-overflow: ellipsis;
-  margin: 8px;
+  margin-right: 8px;
 }
 
 .e-toolbar .e-toolbar-items .e-toolbar-item.e-separator {
