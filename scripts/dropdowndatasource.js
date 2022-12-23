@@ -170,11 +170,11 @@ var DropDownDataSources = (function () {
                 prefixIcon: 'sf-icon-multiple-child', tooltipText: 'Add Multiple Child', disabled: true
             },
             {
-                tooltipText: 'Diagram View', disabled: false, template: "<input id='diagramView' type='radio' >", align: "Right"
+                tooltipText: 'Diagram View', template: "<input id='diagramView' type='radio' >", align: "Right"
             },
             
             {
-                tooltipText: 'Text View', disabled: false, template: "<input id='textView' type='radio' style='margin-left:2px'>", align: "Right"
+                tooltipText: 'Text View', template: "<input id='textView' type='radio' style='margin-left:2px'>", align: "Right"
             },
             {
                 type: 'Separator', align: "Right"
