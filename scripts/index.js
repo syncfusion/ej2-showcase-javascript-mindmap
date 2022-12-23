@@ -1139,12 +1139,60 @@ function textStyleClicked(args) {
     PropertyChange.prototype.mindMapPropertyChange({ propertyName: args.item.tooltipText.toLowerCase(), propertyValue: false });
 }
 
+var btnZoomIncrement;
+
+var diagramRadioButton;
+
+var textRadioButton;
+
 // Toolbar initialization
 
 //Initialize Toolbar component
 var toolbarObj = new ej.navigations.Toolbar({
     clicked: function (args) { UtilityMethods.prototype.toolbarClick(args) },
-    items: DropDownDataSources.prototype.toolbarItems(), height: 28, width: '100%'
+    items: DropDownDataSources.prototype.toolbarItems(), height: 28, width: '100%',
+    created: function (args) {
+        if(diagram !== undefined){
+            btnZoomIncrement = new ej.splitbuttons.DropDownButton({ items: DropDownDataSources.prototype.zoomMenuItems(), content: Math.round(diagram.scrollSettings.currentZoom * 100) + ' %', select: zoomChange });
+            btnZoomIncrement.appendTo('#btnZoomIncrement');
+
+            diagramRadioButton = new ej.buttons.RadioButton({
+                label: 'Diagram View',
+                name: 'diagram view',
+                value: 'Diagram View',
+                checked: true,
+                change: function (args) {
+                    textRadioButton.checked = false;
+                    diagram.dataSourceSettings.dataSource = new ej.data.DataManager(workingData);
+                    diagram.dataBind();
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('treeview').style.display = 'none';
+                    document.getElementById('shortcutDiv').style.visibility = 'visible';
+                    btnWindowMenu.items[2].iconCss = document.getElementById('shortcutDiv').style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
+                    diagram.fitToPage();
+                }
+            });
+            diagramRadioButton.appendTo('#diagramView');
+            
+            textRadioButton = new ej.buttons.RadioButton({
+                label: 'Text View',
+                name: 'text view',
+                value: 'Text View',
+                checked: false,
+                change: function (args) {
+                    diagram.clearSelection();
+                    diagramRadioButton.checked = false;
+                    treeObj.fields.dataSource = new ej.data.DataManager(workingData);
+                    treeObj.dataBind();
+                    document.getElementById('overlay').style.display = 'none';
+                    document.getElementById('treeview').style.display = 'block';
+                    document.getElementById('shortcutDiv').style.visibility = 'hidden';
+                }
+            });
+            textRadioButton.appendTo('#textView');
+
+        }
+    },
 });
 //Render initialized Toolbar component
 
@@ -1171,42 +1219,7 @@ function loadDiagram(event) {
 
 toolbarObj.appendTo('#toolbarEditor');
 
-var diagramRadioButton = new ej.buttons.RadioButton({
-    label: 'Diagram View',
-    name: 'diagram view',
-    value: 'Diagram View',
-    checked: true,
-    change: function (args) {
-        textRadioButton.checked = false;
-        diagram.dataSourceSettings.dataSource = new ej.data.DataManager(workingData);
-        diagram.dataBind();
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('treeview').style.display = 'none';
-        document.getElementById('shortcutDiv').style.visibility = 'visible';
-        btnWindowMenu.items[2].iconCss = document.getElementById('shortcutDiv').style.visibility === "hidden" ? '' : 'sf-icon-check-tick';
-        diagram.fitToPage();
 
-
-    }
-});
-diagramRadioButton.appendTo('#diagramView');
-
-var textRadioButton = new ej.buttons.RadioButton({
-    label: 'Text View',
-    name: 'text view',
-    value: 'Text View',
-    checked: false,
-    change: function (args) {
-        diagram.clearSelection();
-        diagramRadioButton.checked = false;
-        treeObj.fields.dataSource = new ej.data.DataManager(workingData);
-        treeObj.dataBind();
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('treeview').style.display = 'block';
-        document.getElementById('shortcutDiv').style.visibility = 'hidden';
-    }
-});
-textRadioButton.appendTo('#textView');
 
 
 
@@ -1665,8 +1678,8 @@ var fontSize = new ej.inputs.NumericTextBox({
 fontSize.appendTo('#fontSizeBtn');
 
 
-var btnZoomIncrement = new ej.splitbuttons.DropDownButton({ items: DropDownDataSources.prototype.zoomMenuItems(), content: Math.round(diagram.scrollSettings.currentZoom * 100) + ' %', select: zoomChange });
-btnZoomIncrement.appendTo('#btnZoomIncrement');
+// var btnZoomIncrement = new ej.splitbuttons.DropDownButton({ items: DropDownDataSources.prototype.zoomMenuItems(), content: Math.round(diagram.scrollSettings.currentZoom * 100) + ' %', select: zoomChange });
+// btnZoomIncrement.appendTo('#btnZoomIncrement');
 
 // Menubar configuration
 
