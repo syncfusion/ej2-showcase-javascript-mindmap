@@ -170,27 +170,22 @@ var DropDownDataSources = (function () {
                 prefixIcon: 'sf-icon-multiple-child', tooltipText: 'Add Multiple Child', disabled: true
             },
             {
-                type: 'Separator', template:"<div style='margin-left:500px'></div>"
-            },
-            {
-                tooltipText: 'Diagram View', disabled: false, template: "<input id='diagramView' type='radio'>"
+                tooltipText: 'Diagram View', disabled: false, template: "<input id='diagramView' type='radio' >", align: "Right"
             },
             
             {
-                tooltipText: 'Text View', disabled: false, template: "<input id='textView' type='radio' style='margin-left:2px'>"
+                tooltipText: 'Text View', disabled: false, template: "<input id='textView' type='radio' style='margin-left:2px'>", align: "Right"
             },
             {
-                type: 'Separator'
+                type: 'Separator', align: "Right"
             },
             {
-                cssClass: 'tb-item-end tb-zoom-dropdown-btn', template: '<button id="btnZoomIncrement"></button>'
+                cssClass: 'tb-item-end tb-zoom-dropdown-btn', template: '<button id="btnZoomIncrement"></button>', align: "Right"
             },
             {
-                type: 'Separator'
+                type: 'Separator', align: "Right"
             },
-            {
-                type: 'Separator', template:"<div style='margin-left:10px'></div>"
-            },
+           
         ];
         return items;
     }
